@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,9 +21,17 @@ class MainActivity : AppCompatActivity() {
 
         val textDisplay = findViewById<TextView>(R.id.textDisplay)
 
+        Volley.newRequestQueue(this).add(
+                StringRequest(Request.Method.GET, "https://wikipedia.com",{
+                textDisplay.text = it
+            },{
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            })
+        )
+
         //the IO dispatcher is used for input/output operations
         //e.g. network access
-        CoroutineScope(Dispatchers.IO).launch {
+        /*CoroutineScope(Dispatchers.IO).launch {
             val url = URL("https://wikipedia.com")
 
             //typically, for websites which display mainly text data
@@ -38,6 +50,6 @@ class MainActivity : AppCompatActivity() {
                 textDisplay.text = response
             }
         }
-
+        */
     }
 }
