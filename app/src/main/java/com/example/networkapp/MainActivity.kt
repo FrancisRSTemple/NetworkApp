@@ -20,9 +20,16 @@ class MainActivity : AppCompatActivity() {
 
             //typically, for websites which display mainly text data
             //we want to buffer the text (read one line at a time)
-            url.openStream().bufferedReader().readLine().run {
-                Log.d("Response", this)
+            val response = url.openStream().bufferedReader().run {
+                val strBuilder = StringBuilder()
+
+                while(readLine().let {
+                        strBuilder.append(it)
+                        it != null
+                    });
+                strBuilder.toString()
             }
+            Log.d("Response", response)
         }
 
     }
